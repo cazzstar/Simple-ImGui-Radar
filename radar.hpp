@@ -1,5 +1,38 @@
 	inline ImVec2 RadarPosition;
 
+inline void RadarRange( float* x, float* y, float range )
+{
+	if ( fabs( ( *x ) ) > range || fabs( ( *y ) ) > range )
+	{
+		if ( ( *y ) > ( *x ) )
+		{
+			if ( ( *y ) > -( *x ) )
+			{
+				( *x ) = range * ( *x ) / ( *y );
+				( *y ) = range;
+			}
+			else
+			{
+				( *y ) = -range * ( *y ) / ( *x );
+				( *x ) = -range;
+			}
+		}
+		else
+		{
+			if ( ( *y ) > -( *x ) )
+			{
+				( *y ) = range * ( *y ) / ( *x );
+				( *x ) = range;
+			}
+			else
+			{
+				( *x ) = -range * ( *x ) / ( *y );
+				( *y ) = -range;
+			}
+		}
+	}
+}
+
 void CalculatePointOnRadar( FVector vOrigin, int& screenx, int& screeny )
 {
 	FVector vAngle = Camera::Rotation;
